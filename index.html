@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misericordia Inesperada | Circo Valentía - Teatro Mágico de Marcel</title>
+
+  <!-- Favicon derivado del logotipo oficial -->
+  <link rel="icon" type="image/jpeg" href="img/logos/LOGO-MisericordiaInesperada.jpg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts: Cinzel Decorative, Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            circus: {
+              gold: '#E5A93C',
+              goldLight: '#FCE082',
+              crimson: '#8E1616',
+              darkRed: '#4A0808',
+              night: '#07090E',
+              deepNight: '#030407',
+              cyanGlow: '#00D2FF',
+              amberGlow: '#FFA726',
+            }
+          },
+          fontFamily: {
+            cinzel: ['"Cinzel Decorative"', 'serif'],
+            outfit: ['"Outfit"', 'sans-serif'],
+            playfair: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilos de escenografía circense y efectos cinemáticos */
+    body {
+      background-color: #F8F4EA;
+      color: #1F242E;
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Patrón de carpa circense vintage: Franjas alternadas amarillo maíz / crema marfil */
+    .bg-vintage-tent {
+      background-color: #F8F4EA;
+      background-image: repeating-linear-gradient(
+        90deg,
+        #F8F4EA 0px,
+        #F8F4EA 48px,
+        #F3E7C9 48px,
+        #F3E7C9 96px
+      );
+    }
+
+    /* Franjas diagonales circenses amarillo cálido y negro vintage para divisores/secciones */
+    .circus-stripes-bold {
+      background: repeating-linear-gradient(
+        -45deg,
+        #F5B301,
+        #F5B301 18px,
+        #1A1A1E 18px,
+        #1A1A1E 36px
+      );
+    }
+
+    .circus-stripes-soft {
+      background: repeating-linear-gradient(
+        -45deg,
+        #ECE3CE,
+        #ECE3CE 14px,
+        #FAF7EF 14px,
+        #FAF7EF 28px
+      );
+    }
+
+    /* Perspectiva y efectos 3D por movimiento */
+    .perspective-container {
+      perspective: 1200px;
+      transform-style: preserve-3d;
+    }
+
+    .tilt-card {
+      transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    /* Brillo y acentos dorados/ámbar */
+    .gold-glow {
+      text-shadow: 0 0 15px rgba(217, 119, 6, 0.35);
+    }
+
+    .glow-box {
+      box-shadow: 0 12px 35px -8px rgba(217, 119, 6, 0.3);
+    }
+
+    /* Fondo cinemático interactivo (canvas de máscaras y notas musicales) */
+    #ambientCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Tarjetas estilo carpa / pergamino vintage */
+    .glass-card {
+      background: #FFFDF9;
+      border: 2px solid #E2D3B3;
+      box-shadow: 0 8px 24px -4px rgba(40, 30, 10, 0.07);
+    }
+
+    .glass-card:hover {
+      border-color: #D99B26;
+      box-shadow: 0 12px 28px -4px rgba(217, 119, 6, 0.16);
+    }
+
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+      width: 9px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F4EEDF;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D99B26;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #B45309;
+    }
+  </style>
+</head>
+<body class="relative selection:bg-amber-400 selection:text-black bg-vintage-tent">
+
+  <!-- Lienzo interactivo: Máscaras de teatro griegas y notas musicales ascendentes -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- NAVBAR DE NAVEGACIÓN Y COMPRA RÁPIDA -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-[#FFFDF8] border-b-2 border-amber-600/30 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <div class="h-12 w-12 rounded-lg bg-neutral-900 border-2 border-amber-400 flex items-center justify-center overflow-hidden flex-shrink-0 shadow">
+          <img src="src=img/logos/LOGO-MisericordiaInesperada.png" width="80%" height="80%"> alt="Logo Misericordia Inesperada" class="h-full w-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-cinzel text-amber-400 font-black text-xs\'>MI</span>';">
+        </div>
+        <div>
+          <span class="font-cinzel text-base sm:text-lg font-black tracking-wider text-neutral-900 block leading-tight">MISERICORDIA <span class="text-amber-600">INESPERADA</span></span>
+          <span class="text-[10px] text-neutral-700 uppercase tracking-widest font-black block">Circo Valentía • Temporada Teatral</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-bold text-neutral-800">
+        <a href="#experiencia" class="hover:text-amber-600 transition-colors">La Obra</a>
+        <a href="#funciones" class="hover:text-amber-600 transition-colors">Funciones & Boletos</a>
+        <a href="#elenco" class="hover:text-amber-600 transition-colors">Ficha Artística</a>
+        <a href="#ubicacion" class="hover:text-amber-600 transition-colors">Ubicación</a>
+        <a href="#articulo" class="text-xs uppercase px-2.5 py-1 bg-amber-200 text-neutral-950 border-2 border-neutral-900 rounded font-black">Prensa & Crítica</a>
+      </nav>
+
+      <a href="#boletos" class="relative group overflow-hidden px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-neutral-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all flex items-center space-x-2 border-2 border-neutral-950">
+        <span class="relative z-10"><i class="fa-solid fa-ticket mr-1"></i> Comprar Tickets</span>
+      </a>
+    </div>
+    <!-- Franja inferior circense en la barra -->
+    <div class="h-1.5 w-full circus-stripes-bold"></div>
+  </header>
+
+  <!-- HERO SECTION CON EFECTO CINEMÁTICO PARALLAX 3D -->
+  <section class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 overflow-hidden perspective-container">
+    
+    <!-- Luces festivas y reflejos de carpa -->
+    <div id="spotlightLeft" class="absolute -top-32 -left-20 w-96 h-96 bg-amber-300/30 rounded-full blur-3xl pointer-events-none transition-transform duration-75"></div>
+    <div id="spotlightRight" class="absolute top-1/3 -right-20 w-[30rem] h-[30rem] bg-amber-400/25 rounded-full blur-3xl pointer-events-none transition-transform duration-75"></div>
+
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center z-10 relative">
+      
+      <!-- Lado Izquierdo: Copy Teatral e Invitación de Alto Impacto -->
+      <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+        
+        <!-- Marquee / Sellos de Producción -->
+        <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs uppercase tracking-widest text-neutral-900 bg-amber-200 px-4 py-2 rounded-full border-2 border-neutral-900 shadow-sm">
+          <span class="text-neutral-950 font-black"><i class="fa-solid fa-masks-theater text-amber-800 mr-1.5"></i> REY BALAM PRODUCTORA³</span>
+          <span class="text-neutral-900 font-black">•</span>
+          <span class="font-extrabold">GUSTAVO OSTRICH</span>
+          <span class="text-neutral-900 font-black">•</span>
+          <span class="font-extrabold">MILENIOTRES PRODUCCIONES®</span>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-xs sm:text-sm font-black text-amber-800 tracking-[0.25em] uppercase">Gran Estreno Teatral en Guatemala</h2>
+          <img class="img" src="img/logos/LOGO-MisericordiaInesperada.png">
+          <!--- <h1 class="font-cinzel text-4xl sm:text-6xl xl:text-7xl font-black text-neutral-950 leading-[1.08]">
+            MISERICORDIA<br><span class="text-amber-600 underline decoration-amber-400 decoration-wavy">INESPERADA</span>
+          </h1> --->
+          <p class="font-playfair text-xl sm:text-2xl text-neutral-800 italic font-semibold">
+            «Donde la voluntad desafía a la desdicha bajo la cuerda floja del Circo Valentía»
+          </p>
+        </div>
+
+        <!-- Mención de Protagonistas de Cartelera -->
+        <div class="py-3 px-4 rounded-2xl bg-white border-2 border-amber-400 shadow-sm flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-sm text-neutral-800 font-medium">
+          <div><i class="fa-solid fa-star text-amber-500 text-xs mr-1"></i> <strong class="text-neutral-950">Diego Sierra</strong></div>
+          <div><i class="fa-solid fa-star text-amber-500 text-xs mr-1"></i> <strong class="text-neutral-950">María Yela</strong></div>
+          <div><i class="fa-solid fa-star text-amber-500 text-xs mr-1"></i> <strong class="text-neutral-950">Julio Barrutia</strong></div>
+          <div><i class="fa-solid fa-star text-amber-500 text-xs mr-1"></i> <strong class="text-neutral-950">Sofía Ponce</strong></div>
+        </div>
+
+        <p class="text-neutral-700 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+          Una cautivadora experiencia de <strong class="text-neutral-900 font-bold">drama psicológico y realismo mágico con música en vivo</strong>. Sumérgete en el viaje de Eddy, Bruno y Margarita: tres seres marginados que transforman la soledad en un conmovedor renacer humano.
+        </p>
+
+        <!-- Highlights de Fechas y Precios del Banner Oficial -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-8 border-l-amber-500">
+            <div class="h-12 w-12 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-800 text-2xl font-bold">
+              <i class="fa-regular fa-calendar-check"></i>
+            </div>
+            <div>
+              <div class="text-[11px] text-neutral-600 uppercase tracking-wider font-extrabold">Funciones Exclusivas</div>
+              <div class="text-neutral-950 font-black text-base">Dom 15 Nov (18:00 hrs)</div>
+              <div class="text-amber-800 text-sm font-bold">Sáb 21 Nov (20:00 hrs)</div>
+            </div>
+          </div>
+
+          <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-l-8 border-l-neutral-900">
+            <div class="h-12 w-12 rounded-xl bg-amber-300 border border-neutral-900 flex items-center justify-center text-neutral-950 text-2xl">
+              <i class="fa-solid fa-tags"></i>
+            </div>
+            <div>
+              <div class="text-[11px] text-neutral-600 uppercase tracking-wider font-extrabold">Promoción Oficial</div>
+              <div class="text-neutral-950 font-black text-base">Q. 100 Individual</div>
+              <div class="text-amber-800 text-sm font-black">¡2 Entradas por Q. 150!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acciones Directas -->
+        <div class="pt-4 flex flex-col sm:flex-row items-center gap-4">
+          <a href="#boletos" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-neutral-950 text-amber-400 hover:text-black hover:bg-amber-400 font-black text-base tracking-wide shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-3 glow-box border-2 border-neutral-950">
+            <i class="fa-solid fa-ticket-simple text-xl"></i>
+            <span>RESERVAR MIS ENTRADAS</span>
+          </a>
+          <a href="#experiencia" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-white hover:bg-amber-50 text-neutral-800 font-bold text-sm border-2 border-neutral-300 transition-all flex items-center justify-center space-x-2 shadow-sm">
+            <i class="fa-solid fa-circle-play text-amber-600 text-lg"></i>
+            <span>Conocer la Historia</span>
+          </a>
+        </div>
+
+        <div class="text-xs text-neutral-600 font-semibold flex items-center justify-center lg:justify-start gap-4 pt-1">
+          <span><i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> Boletos Seguros vía SocialTickets</span>
+          <span>•</span>
+          <span><i class="fa-solid fa-location-dot text-amber-600 mr-1"></i> Teatro Mágico de Marcel, Zona 2</span>
+        </div>
+
+      </div>
+
+      <!-- Lado Derecho: Pancarta Oficial Interactiva con Efecto 3D Tilt al Cursor -->
+      <div class="lg:col-span-5 flex justify-center perspective-container w-full">
+        <div id="posterCard" class="tilt-card relative w-full max-w-sm sm:max-w-md rounded-3xl overflow-hidden shadow-2xl border-4 border-amber-400 group bg-neutral-950 transition-all duration-300">
+          
+          <!-- Imagen de la Pancarta Oficial con Fallback estilizado de Teatro -->
+          <div class="relative min-h-[460px] sm:min-h-[540px] flex items-center justify-center bg-neutral-900 overflow-hidden">
+            <img src="img/Pancarta QRFINAL.jpg" 
+                 alt="Pancarta Oficial Misericordia Inesperada" 
+                 class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
+                 onerror="this.style.display='none'; document.getElementById('posterFallback').classList.remove('hidden');">
+            
+            <!-- Fallback visual estilizado si la imagen local no carga en el preview -->
+            <div id="posterFallback" class="hidden absolute inset-0 bg-gradient-to-b from-neutral-950 via-[#1a140d] to-neutral-950 p-6 flex flex-col justify-between text-center border border-amber-500/30">
+              <div class="pt-4">
+                <span class="text-[10px] tracking-[0.3em] uppercase text-amber-400 font-black block">Rey Balam Productora³ Presenta</span>
+                <div class="flex justify-center gap-2 mt-2 text-xs text-neutral-300 font-semibold">
+                  <span>Diego Sierra</span>•<span>María Yela</span>•<span>Julio Barrutia</span>•<span>Sofía Ponce</span>
+                </div>
+              </div>
+              <div class="py-6">
+                <div class="w-20 h-20 rounded-full bg-amber-400/20 border-2 border-amber-400 mx-auto flex items-center justify-center text-amber-400 text-3xl shadow-lg mb-4">
+                  <i class="fa-solid fa-masks-theater"></i>
+                </div>
+                <h3 class="font-cinzel text-3xl font-black text-amber-300 leading-tight">MISERICORDIA<br><span class="text-white">INESPERADA</span></h3>
+                <p class="text-xs text-amber-200/80 mt-2 italic font-playfair">Circo Valentía</p>
+              </div>
+              <div class="space-y-2 pb-6">
+                <div class="text-xs text-gray-300">
+                  <strong class="text-white">Gran estreno:</strong> 15 NOV 18:00 hrs &bull; 21 NOV 20:00 hrs
+                </div>
+                <div class="text-xs text-amber-400 font-black">Teatro Mágico de Marcel</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Reflejo de luz 3D interactivo -->
+          <div id="glareLayer" class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+          <!-- Badge Flotante Sobre la Carpa -->
+          <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-400 text-xs text-neutral-950 font-black flex items-center space-x-1.5 shadow-md z-20">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>VENTA ACTIVA</span>
+          </div>
+
+          <!-- Panel de Créditos Integrado Armoniosamente -->
+          <div class="relative z-20 bg-neutral-950/95 border-t border-amber-400/40 p-3.5 text-center">
+            <p class="text-xs text-amber-300 font-bold tracking-wider uppercase">Escrita por Arc Guimel • Dirigida por Iván López</p>
+            <p class="text-[11px] text-gray-300 mt-0.5 font-medium">Coreografías: Fredy Corado | Rey Balam &amp; MilenioTres Producciones</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BANNER CINEMÁTICO SECUNDARIO: PORTADA PANORÁMICA -->
+  <section class="relative py-12 px-4 max-w-7xl mx-auto z-10">
+    <div class="relative rounded-3xl overflow-hidden border-4 border-neutral-900 shadow-xl group">
+      <img src="EVENTO Portada-01.jpg" alt="Circo Valentía Escena" class="w-full h-64 sm:h-80 md:h-96 object-cover object-center filter group-hover:scale-105 transition-transform duration-700">
+      
+      <!-- Detalle vintage de franjas en la esquina superior -->
+      <div class="absolute top-0 inset-x-0 h-3 circus-stripes-bold"></div>
+
+      <div class="absolute inset-0 bg-neutral-950/75 flex flex-col justify-center p-6 sm:p-12">
+        <span class="text-amber-400 text-xs sm:text-sm font-black uppercase tracking-widest mb-2"><i class="fa-solid fa-feather-pointed mr-2"></i>Realismo Mágico Guatemalteco</span>
+        <h3 class="text-2xl sm:text-4xl font-cinzel font-bold text-white max-w-xl leading-tight">
+          «Porque para edificar los sueños, los cambios parten desde el pensamiento.»
+        </h3>
+        <p class="text-sm sm:text-base text-amber-100 max-w-lg mt-3 font-normal">
+          Una obra donde el circo abandonado se transforma en el espejo de nuestras propias batallas interiores. Apta para jóvenes y adultos (+15 años).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN SINOPSIS & NARRATIVA ESCÉNICA -->
+  <section id="experiencia" class="py-20 px-4 max-w-7xl mx-auto z-10 relative">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs uppercase tracking-[0.3em] text-amber-700 font-extrabold">Un Espectáculo Inmersivo</span>
+      <h2 class="text-3xl sm:text-5xl font-cinzel font-black text-neutral-950 mt-2">La Magia del Circo Valentía</h2>
+      <div class="w-24 h-1.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-4 rounded-full"></div>
+      <p class="text-neutral-700 mt-4 text-base sm:text-lg">
+        La vida representada como una carpa donde solo es posible encender la luz a través de las transformaciones de la conciencia.
+      </p>
+    </div>
+
+    <!-- Tríada de los 3 Pilares Simbólicos -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Pilar 1: La Tragedia (Bruno) -->
+      <div class="glass-card rounded-3xl p-8 border border-red-300 hover:border-red-500 transition-all duration-300 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/20 transition-all"></div>
+        <div class="w-14 h-14 rounded-2xl bg-red-100 border border-red-300 flex items-center justify-center text-red-700 text-2xl mb-6 shadow-sm">
+          <i class="fa-solid fa-fire"></i>
+        </div>
+        <span class="text-xs text-red-700 font-black tracking-widest uppercase">El Pilar de la Tragedia</span>
+        <h3 class="text-2xl font-cinzel font-black text-neutral-950 mt-1 mb-3">Bruno</h3>
+        <p class="text-sm text-neutral-700 leading-relaxed font-normal">
+          El viejo malabarista lisiado tras un accidente que le arrebató su sustento. Arrojado a la intemperie y al reciclaje callejero, encarna el eco de los talentos desterrados por la indiferencia.
+        </p>
+        <div class="mt-6 pt-4 border-t border-neutral-200 text-xs text-neutral-600 font-medium">
+          Interpretado por: <strong class="text-neutral-950">José Julio Barrutia Cañas</strong>
+        </div>
+      </div>
+
+      <!-- Pilar 2: El Amor y la Fe (Eddy) -->
+      <div class="glass-card rounded-3xl p-8 border-2 border-amber-500 hover:border-amber-600 transition-all duration-300 relative overflow-hidden group bg-gradient-to-b from-amber-50/70 to-white">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-400/20 rounded-full blur-2xl group-hover:bg-amber-400/30 transition-all"></div>
+        <div class="w-14 h-14 rounded-2xl bg-amber-100 border border-amber-400 flex items-center justify-center text-amber-800 text-2xl mb-6 shadow-sm">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+        <span class="text-xs text-amber-800 font-black tracking-widest uppercase">El Pilar del Amor y Resiliencia</span>
+        <h3 class="text-2xl font-cinzel font-black text-neutral-950 mt-1 mb-3">Eddy</h3>
+        <p class="text-sm text-neutral-800 leading-relaxed font-normal">
+          Cuidador del circo y expayaso ataviado de negro y amarillo como las abejas. Acompañado de su inseparable peluche, el <em>Señor Sísifo</em>, libra la mayor batalla contra la soledad hasta encender la chispa del renacer.
+        </p>
+        <div class="mt-6 pt-4 border-t border-amber-200 text-xs text-neutral-600 font-medium">
+          Interpretado por: <strong class="text-neutral-950">Diego Alejandro Sierra Garrido</strong>
+        </div>
+      </div>
+
+      <!-- Pilar 3: La Locura y el Olvido (Margarita) -->
+      <div class="glass-card rounded-3xl p-8 border border-sky-300 hover:border-sky-500 transition-all duration-300 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl group-hover:bg-sky-500/20 transition-all"></div>
+        <div class="w-14 h-14 rounded-2xl bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-700 text-2xl mb-6 shadow-sm">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <span class="text-xs text-sky-800 font-black tracking-widest uppercase">El Pilar de la Demencia y Poesía</span>
+        <h3 class="text-2xl font-cinzel font-black text-neutral-950 mt-1 mb-3">Margarita</h3>
+        <p class="text-sm text-neutral-700 leading-relaxed font-normal">
+          Una mujer arrojada al desamparo cuando la demencia nubla su entorno familiar. En el Circo Valentía halla el refugio donde sus desvaríos dialogan con la inocencia y la ternura.
+        </p>
+        <div class="mt-6 pt-4 border-t border-neutral-200 text-xs text-neutral-600 font-medium">
+          Interpretada por: <strong class="text-neutral-950">María Isabel Yela Sayle</strong>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Personajes Místicos & Fantasía Escénica -->
+    <div class="mt-12 glass-card rounded-3xl p-8 border border-amber-300">
+      <h3 class="text-xl font-cinzel font-black text-neutral-950 mb-6 flex items-center">
+        <i class="fa-solid fa-wand-magic-sparkles text-amber-600 mr-3"></i> Criaturas y Presencias del Circo Valentía
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
+        <div class="p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm">
+          <div class="font-black text-neutral-950 text-base">Espectro Ambrosía</div>
+          <div class="text-xs text-amber-700 font-bold">Zanquero de anatomía desmesurada</div>
+          <p class="text-neutral-600 text-xs mt-2">La sombra omnipresente que marca el peso de la muerte y la tensión entre los extremos del escenario.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm">
+          <div class="font-black text-neutral-950 text-base">Valentina & El Mimo</div>
+          <div class="text-xs text-amber-700 font-bold">Catrina Lírica y Silencio Expresivo</div>
+          <p class="text-neutral-600 text-xs mt-2">Devuelven la armonía y melodía crucial en cada clímax, representando la inmortalidad del arte.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm">
+          <div class="font-black text-neutral-950 text-base">El Señor Sísifo</div>
+          <div class="text-xs text-amber-700 font-bold">Oso de peluche y tótem emocional</div>
+          <p class="text-neutral-600 text-xs mt-2">Confidente íntimo de Eddy, guardián mudo de los anhelos más limpios de la carpa.</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-white border border-neutral-200 shadow-sm">
+          <div class="font-black text-neutral-950 text-base">Las Ánimas Circenses</div>
+          <div class="text-xs text-amber-700 font-bold">Dúo de Malabarismo Coreográfico</div>
+          <p class="text-neutral-600 text-xs mt-2">Movimiento, destreza y ritmo en vivo que dan atmósfera viva a cada cambio de acto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÓDULO DE VENTA Y SELECCIÓN DE ENTRADAS (INTERFAZ TIPO SOCIALTICKETS OPTIMIZADA) -->
+  <section id="boletos" class="py-20 px-4 bg-[#F2EDE0] border-y-4 border-neutral-900 z-20 relative">
+    
+    <!-- Detalle circense superior -->
+    <div class="absolute -top-3 left-0 right-0 h-3 circus-stripes-bold"></div>
+
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="px-5 py-2 rounded-full text-xs font-black tracking-widest uppercase bg-amber-400 text-neutral-950 border-2 border-neutral-950 shadow-sm inline-block">
+          Boletería Oficial SocialTickets
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-cinzel font-black text-neutral-950 mt-4">Adquiere Tus Entradas</h2>
+        <p class="text-neutral-700 mt-3 text-base font-normal">
+          Selecciona tu función, elige la cantidad de boletos con descuento en combo y completa tu reserva de inmediato.
+        </p>
+      </div>
+
+      <!-- Tarjeta Principal del Motor de Ticketing -->
+      <div class="rounded-3xl p-6 sm:p-10 border-4 border-neutral-900 shadow-2xl bg-white">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <!-- Columna 1: Selección de Función y Localidad -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <div>
+              <label class="block text-xs uppercase tracking-widest text-neutral-800 font-black mb-3">
+                1. Selecciona la Función
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <!-- Función 1 -->
+                <div onclick="selectFunction('15nov')" id="card-15nov" class="cursor-pointer p-4 rounded-2xl border-2 border-amber-500 bg-amber-50 transition-all function-selector shadow-sm">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-black uppercase tracking-wider text-amber-800">Gran Estreno</span>
+                    <i class="fa-solid fa-circle-check text-amber-600 check-icon"></i>
+                  </div>
+                  <div class="text-lg font-black text-neutral-950 mt-1">Domingo 15 de Noviembre</div>
+                  <div class="text-sm text-amber-800 font-bold"><i class="fa-regular fa-clock mr-1"></i> 18:00 Horas</div>
+                  <div class="text-xs text-neutral-600 mt-2 font-medium"><i class="fa-solid fa-location-dot mr-1"></i> Teatro Mágico de Marcel</div>
+                </div>
+
+                <!-- Función 2 -->
+                <div onclick="selectFunction('21nov')" id="card-21nov" class="cursor-pointer p-4 rounded-2xl border-2 border-neutral-300 bg-neutral-50/70 hover:border-amber-400 transition-all function-selector">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-black uppercase tracking-wider text-neutral-500">Segunda Función</span>
+                    <i class="fa-regular fa-circle text-neutral-400 check-icon"></i>
+                  </div>
+                  <div class="text-lg font-black text-neutral-950 mt-1">Sábado 21 de Noviembre</div>
+                  <div class="text-sm text-neutral-700 font-bold"><i class="fa-regular fa-clock mr-1"></i> 20:00 Horas</div>
+                  <div class="text-xs text-neutral-600 mt-2 font-medium"><i class="fa-solid fa-location-dot mr-1"></i> Teatro Mágico de Marcel</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Selector de Boletos y Promoción 2x150 -->
+            <div>
+              <label class="block text-xs uppercase tracking-widest text-neutral-800 font-black mb-3">
+                2. Número de Asistentes
+              </label>
+
+              <div class="p-5 rounded-2xl bg-[#FAF7F0] border-2 border-amber-300 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <div class="font-black text-neutral-950 text-base">Admisión General • Butaca Numerada</div>
+                  <div class="text-xs text-neutral-600 mt-0.5 font-medium">Precio individual: <strong class="text-amber-800 font-black">Q. 100.00</strong></div>
+                  <div class="inline-block mt-1 px-3 py-1 rounded-full text-[11px] font-black bg-amber-300 text-neutral-950 border border-neutral-900">
+                    <i class="fa-solid fa-tag mr-1"></i> Promoción activa: ¡Cada par de entradas a solo Q. 150!
+                  </div>
+                </div>
+
+                <!-- Contador de tickets -->
+                <div class="flex items-center space-x-3 bg-white px-4 py-2 rounded-xl border-2 border-neutral-900 shadow-sm">
+                  <button onclick="updateQty(-1)" class="w-8 h-8 rounded-lg bg-neutral-100 text-neutral-800 hover:bg-amber-400 hover:text-black font-black flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-minus text-xs"></i>
+                  </button>
+                  <span id="ticketQty" class="text-xl font-black text-neutral-950 w-8 text-center">2</span>
+                  <button onclick="updateQty(1)" class="w-8 h-8 rounded-lg bg-neutral-100 text-neutral-800 hover:bg-amber-400 hover:text-black font-black flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formulario de Comprador / Asistente -->
+            <div class="space-y-4 pt-2">
+              <label class="block text-xs uppercase tracking-widest text-neutral-700 font-black">
+                3. Datos de Contacto para Envío de Boletos Digitales
+              </label>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <input type="text" id="buyerName" placeholder="Nombre completo" class="w-full px-4 py-3 rounded-xl bg-white border border-neutral-300 text-neutral-900 placeholder-neutral-400 text-sm focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all">
+                </div>
+                <div>
+                  <input type="email" id="buyerEmail" placeholder="Correo electrónico (recibe boletos)" class="w-full px-4 py-3 rounded-xl bg-white border border-neutral-300 text-neutral-900 placeholder-neutral-400 text-sm focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all">
+                </div>
+              </div>
+
+              <div>
+                <input type="tel" id="buyerPhone" placeholder="Teléfono / WhatsApp de contacto (+502)" class="w-full px-4 py-3 rounded-xl bg-white border border-neutral-300 text-neutral-900 placeholder-neutral-400 text-sm focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Columna 2: Resumen Dinámico de Orden & Despacho SocialTickets -->
+          <div class="lg:col-span-5 bg-gradient-to-b from-neutral-950 via-[#18191E] to-neutral-950 p-6 sm:p-8 rounded-2xl border-2 border-amber-400 flex flex-col justify-between shadow-xl text-white">
+            
+            <div class="space-y-6">
+              <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <span class="font-cinzel text-lg font-black text-amber-300">Resumen de Orden</span>
+                <span class="text-xs text-amber-400 font-extrabold bg-amber-400/10 px-2.5 py-1 rounded-md border border-amber-400/30">SocialTickets</span>
+              </div>
+
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between text-gray-300">
+                  <span>Obra:</span>
+                  <span class="font-bold text-white">Misericordia Inesperada</span>
+                </div>
+                <div class="flex justify-between text-gray-300">
+                  <span>Función elegida:</span>
+                  <span id="summaryFunction" class="font-bold text-amber-400">Dom 15 Nov - 18:00 hrs</span>
+                </div>
+                <div class="flex justify-between text-gray-300">
+                  <span>Lugar:</span>
+                  <span class="font-bold text-white">Teatro Mágico de Marcel</span>
+                </div>
+                <div class="flex justify-between text-gray-300">
+                  <span>Boletos:</span>
+                  <span id="summaryQty" class="font-bold text-white">2 Entradas</span>
+                </div>
+                <div class="flex justify-between text-gray-300">
+                  <span>Descuento aplicado:</span>
+                  <span id="summaryDiscount" class="font-bold text-emerald-400">- Q. 50.00 (Combo 2x150)</span>
+                </div>
+              </div>
+
+              <!-- Total a Pagar -->
+              <div class="pt-4 border-t border-white/10">
+                <div class="flex items-baseline justify-between">
+                  <div>
+                    <span class="text-xs uppercase text-gray-400 block font-bold">Total a Cancelar</span>
+                    <span class="text-[11px] text-gray-500">Impuestos y emisión incluidos</span>
+                  </div>
+                  <div class="text-right">
+                    <span id="summaryTotal" class="text-3xl font-black text-amber-400 font-cinzel">Q. 150.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-black/40 p-3.5 rounded-xl border border-white/10 text-xs text-gray-300 space-y-1">
+                <p><i class="fa-solid fa-qrcode text-amber-400 mr-1.5"></i> Tus boletos incluirán código QR intransferible.</p>
+                <p><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i> Puertas abren 45 minutos antes de la función.</p>
+              </div>
+
+            </div>
+
+            <!-- Botón de Confirmación / Checkout -->
+            <div class="pt-6 space-y-3">
+              <button onclick="handlePurchase()" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black font-black text-base uppercase tracking-wider shadow-lg hover:scale-102 active:scale-98 transition-all flex items-center justify-center space-x-2 border border-black/20">
+                <i class="fa-solid fa-lock"></i>
+                <span>Confirmar y Pagar Boletos</span>
+              </button>
+
+              <div class="text-center">
+                <a href="https://eventos.socialtickets.org/event/misericordia-inesperada-otza16" target="_blank" class="text-xs text-amber-200/80 hover:text-amber-300 underline transition-colors">
+                  Ir al portal SocialTickets.org en nueva pestaña
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FICHA TÉCNICA Y ARTÍSTICA COMPLETA -->
+  <section id="elenco" class="py-20 px-4 max-w-7xl mx-auto z-10 relative">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs uppercase tracking-[0.25em] text-amber-800 font-black">Ficha Artística & Técnica</span>
+      <h2 class="text-3xl sm:text-5xl font-cinzel font-black text-neutral-950 mt-2">Elenco & Equipo Creador</h2>
+      <div class="w-24 h-1.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-4 rounded-full"></div>
+      <p class="text-neutral-700 mt-4 text-base font-normal">
+        Un equipo multidisciplinario de artistas escénicos, músicos, malabaristas y productores reunidos para encender la carpa.
+      </p>
+    </div>
+
+    <!-- Bloque de Elenco -->
+    <div class="mb-14">
+      <h3 class="text-xl font-cinzel font-black text-neutral-950 mb-6 flex items-center">
+        <i class="fa-solid fa-users text-amber-600 mr-3"></i> Reparto en Escena
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <!-- Diego Sierra -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-amber-300/80 hover:border-amber-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-amber-400 text-black flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm border border-black/10">
+            DS
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">Diego Alejandro Sierra</div>
+            <div class="text-xs text-amber-800 font-black uppercase">Eddy (Payaso Cuidador)</div>
+            <div class="text-xs text-neutral-600 mt-1">El amor, la inocencia y la custodia del circo.</div>
+          </div>
+        </div>
+
+        <!-- María Yela -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-sky-300/80 hover:border-sky-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-sky-200 text-sky-900 flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm border border-sky-300">
+            MY
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">María Isabel Yela Sayle</div>
+            <div class="text-xs text-sky-800 font-black uppercase">Margarita</div>
+            <div class="text-xs text-neutral-600 mt-1">La demencia, la ternura y el cobijo del desamparo.</div>
+          </div>
+        </div>
+
+        <!-- Julio Barrutia -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-red-300/80 hover:border-red-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-red-200 text-red-900 flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm border border-red-300">
+            JB
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">José Julio Barrutia Cañas</div>
+            <div class="text-xs text-red-800 font-black uppercase">Bruno</div>
+            <div class="text-xs text-neutral-600 mt-1">El viejo malabarista lisiado y reciclador.</div>
+          </div>
+        </div>
+
+        <!-- Sofía Ponce -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-purple-300/80 hover:border-purple-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-purple-200 text-purple-900 flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm border border-purple-300">
+            SP
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">Sofía Ponce</div>
+            <div class="text-xs text-purple-800 font-black uppercase">Valentina (Voz & Catrina)</div>
+            <div class="text-xs text-neutral-600 mt-1">La voz mágica que reanima el espíritu escénico.</div>
+          </div>
+        </div>
+
+        <!-- Erwin Molina -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-neutral-300 hover:border-neutral-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-neutral-900 text-amber-400 flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm">
+            EM
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">Erwin Ramón Molina</div>
+            <div class="text-xs text-neutral-800 font-black uppercase">El Espectro Ambrosía</div>
+            <div class="text-xs text-neutral-600 mt-1">Zanquero de semblante oscuro y fatalidad.</div>
+          </div>
+        </div>
+
+        <!-- Héctor Toledo -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-amber-300/80 hover:border-amber-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-amber-200 text-amber-900 flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm border border-amber-300">
+            HT
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">Héctor Toledo</div>
+            <div class="text-xs text-amber-800 font-black uppercase">El Mimo</div>
+            <div class="text-xs text-neutral-600 mt-1">Gesto, poesía silenciosa y acompañamiento.</div>
+          </div>
+        </div>
+
+        <!-- Malabaristas / Ánimas -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-teal-300/80 hover:border-teal-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-teal-200 text-teal-900 flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm border border-teal-300">
+            AN
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">Ánimas Circenses</div>
+            <div class="text-xs text-teal-800 font-black uppercase">Fredy Turcios & Daniel Morales</div>
+            <div class="text-xs text-neutral-600 mt-1">Malabaristas en escena («El Mascota»).</div>
+          </div>
+        </div>
+
+        <!-- Guillermo Arce / Mishel -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-emerald-300/80 hover:border-emerald-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-emerald-200 text-emerald-900 flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm border border-emerald-300">
+            GA
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">Guillermo Arce & Mishel</div>
+            <div class="text-xs text-emerald-800 font-black uppercase">Padre & Niña de Amarillo</div>
+            <div class="text-xs text-neutral-600 mt-1">El punto de quiebre y el detonante de la redención.</div>
+          </div>
+        </div>
+
+        <!-- Señor Sísifo -->
+        <div class="glass-card p-5 rounded-2xl flex items-center space-x-4 border border-amber-300/80 hover:border-amber-500 transition-colors">
+          <div class="w-14 h-14 rounded-full bg-amber-500 text-white flex items-center justify-center text-xl font-black flex-shrink-0 shadow-sm">
+            <i class="fa-solid fa-paw"></i>
+          </div>
+          <div>
+            <div class="font-black text-neutral-950 text-base">Señor Sísifo</div>
+            <div class="text-xs text-amber-800 font-black uppercase">Amigo Fiel de Peluche</div>
+            <div class="text-xs text-neutral-600 mt-1">Orquestador de los sentimientos más puros de Eddy.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bloque de Dirección y Equipo Creativo -->
+    <div class="glass-card rounded-3xl p-8 border-2 border-amber-400 shadow-md">
+      <h3 class="text-xl font-cinzel font-black text-neutral-950 mb-6 flex items-center">
+        <i class="fa-solid fa-clapperboard text-amber-600 mr-3"></i> Dirección, Producción y Diseño
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
+        <div class="p-4 rounded-xl bg-white/70 border border-amber-200">
+          <span class="text-xs text-amber-800 font-black uppercase tracking-wider block">Dramaturgia y Dirección Escénica</span>
+          <strong class="text-neutral-950 text-base">Arc Guimel (Guillermo Arce)</strong>
+          <p class="text-xs text-neutral-600 mt-1 font-normal">Texto original, dramaturgia y propuesta conceptual del Circo Valentía.</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white/70 border border-amber-200">
+          <span class="text-xs text-amber-800 font-black uppercase tracking-wider block">Dirección Artística-Escénica</span>
+          <strong class="text-neutral-950 text-base">Iván López</strong>
+          <p class="text-xs text-neutral-600 mt-1 font-normal">Construcción estética, visual y ritmo dramático en tablado.</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white/70 border border-amber-200">
+          <span class="text-xs text-amber-800 font-black uppercase tracking-wider block">Gestión Cultural & Co-Dirección Artística</span>
+          <strong class="text-neutral-950 text-base">Gustavo Ostrich</strong>
+          <p class="text-xs text-neutral-600 mt-1 font-normal">Producción ejecutiva de campo, vinculación y dirección complementaria.</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white/70 border border-amber-200">
+          <span class="text-xs text-amber-800 font-black uppercase tracking-wider block">Dirección Coreográfica-Musical</span>
+          <strong class="text-neutral-950 text-base">Fredy Corado Arévalo</strong>
+          <p class="text-xs text-neutral-600 mt-1 font-normal">Diseño de movimiento de pista circense y acoplamiento musical en vivo.</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white/70 border border-amber-200">
+          <span class="text-xs text-amber-800 font-black uppercase tracking-wider block">Diseño de Vestuario Teatral</span>
+          <strong class="text-neutral-950 text-base">Héctor Leal</strong>
+          <p class="text-xs text-neutral-600 mt-1 font-normal">Creación indumentaria: del traje abeja de Eddy a la catrina y zancos.</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white/70 border border-amber-200">
+          <span class="text-xs text-amber-800 font-black uppercase tracking-wider block">Producción General & Co-Producción</span>
+          <strong class="text-neutral-950 text-base">Rey Balam Productora³ & MilenioTres</strong>
+          <p class="text-xs text-neutral-600 mt-1 font-normal">En alianza con Nosbit Audio Studio para el diseño acústico inmersivo.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- UBICACIÓN Y LOGÍSTICA (TEATRO MÁGICO DE MARCEL) -->
+  <section id="ubicacion" class="py-16 px-4 max-w-7xl mx-auto z-10 relative">
+    <div class="glass-card rounded-3xl p-8 sm:p-12 border border-amber-300">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-7 space-y-4">
+          <span class="text-xs uppercase tracking-widest text-amber-800 font-black">Lugar del Espectáculo</span>
+          <h2 class="text-2xl sm:text-4xl font-cinzel font-black text-neutral-950">Teatro Mágico de Marcel</h2>
+          <p class="text-neutral-700 text-sm sm:text-base leading-relaxed font-normal">
+            Ubicado en una de las zonas culturales más tradicionales de la Ciudad de Guatemala, a pocos pasos del emblemático Parque Isabel La Católica. El teatro cuenta con butacas confortables, acústica adecuada y servicio de parqueo cercano para una velada segura e inolvidable.
+          </p>
+
+          <div class="space-y-2 pt-2 text-sm text-neutral-700">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-map-pin text-amber-600 w-5"></i>
+              <span><strong>Dirección:</strong> 8ª Avenida 0-49, Zona 2, Ciudad de Guatemala (C.P. 01002).</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-square-parking text-emerald-700 w-5"></i>
+              <span><strong>Estacionamiento:</strong> Disponibilidad de parqueos contiguos e inmediatos sobre la avenida.</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-bell text-amber-600 w-5"></i>
+              <span><strong>Puntualidad:</strong> Recomendamos presentarse 30 minutos antes de la hora indicada.</span>
+            </div>
+          </div>
+
+          <div class="pt-4 flex flex-wrap gap-4">
+            <a href="https://maps.google.com/?q=Teatro+Magico+de+Marcel+8a+Avenida+0-49+Zona+2+Guatemala" target="_blank" class="px-5 py-2.5 rounded-xl bg-neutral-900 text-white hover:bg-black text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center space-x-2 shadow-sm">
+              <i class="fa-solid fa-diamond-turn-right text-amber-400"></i>
+              <span>Abrir en Google Maps</span>
+            </a>
+            <a href="#boletos" class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-neutral-950 text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center space-x-2 shadow-sm border border-black/10">
+              <i class="fa-solid fa-ticket"></i>
+              <span>Comprar Boletos para esta Sala</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="rounded-2xl overflow-hidden border-2 border-amber-400 shadow-xl bg-gradient-to-br from-amber-50 to-white p-6 space-y-4 text-center">
+            <div class="w-16 h-16 rounded-full bg-amber-400 mx-auto flex items-center justify-center text-black text-3xl shadow-sm">
+              <i class="fa-solid fa-theater-masks"></i>
+            </div>
+            <h4 class="font-cinzel text-xl text-neutral-950 font-black">Temporada de Noviembre</h4>
+            <div class="p-3.5 rounded-xl bg-white border border-amber-300 text-sm shadow-sm">
+              <div class="text-amber-800 font-black text-base">Domingo 15 de Noviembre • 18:00 hrs</div>
+              <div class="text-neutral-700 font-bold mt-1">Sábado 21 de Noviembre • 20:00 hrs</div>
+            </div>
+            <p class="text-xs text-neutral-600 font-bold">
+              Admisión Q. 100 | Promoción Especial: 2 personas x Q. 150
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN ARTÍCULO Y CRÍTICA PROMOCIONAL (FORMATO DE PRENSA CULTURAL) -->
+  <section id="articulo" class="py-20 px-4 max-w-5xl mx-auto z-10 relative">
+    <div class="glass-card rounded-3xl p-8 sm:p-14 border border-amber-300 shadow-md">
+      
+      <div class="border-b border-neutral-200 pb-6 mb-8 text-center sm:text-left">
+        <span class="text-xs uppercase tracking-[0.25em] text-amber-800 font-black block mb-2">Crónica y Difusión Cultural</span>
+        <h2 class="text-2xl sm:text-4xl font-serif font-bold text-neutral-950 leading-tight">
+          Misericordia Inesperada: Poesía visual, música en vivo y resiliencia en la cuerda floja de la existencia
+        </h2>
+        <div class="text-xs text-neutral-600 mt-3 flex flex-wrap items-center justify-center sm:justify-start gap-4 font-semibold">
+          <span><i class="fa-regular fa-newspaper mr-1 text-amber-700"></i> Por Redacción Cultural</span>
+          <span>•</span>
+          <span><i class="fa-solid fa-masks-theater mr-1 text-amber-700"></i> Teatro Nacional Independiente</span>
+          <span>•</span>
+          <span><i class="fa-regular fa-clock mr-1 text-amber-700"></i> 4 min de lectura</span>
+        </div>
+      </div>
+
+      <div class="prose prose-neutral max-w-none text-neutral-800 space-y-5 text-sm sm:text-base leading-relaxed font-normal">
+        
+        <p class="text-lg text-neutral-900 font-medium leading-relaxed first-letter:text-5xl first-letter:font-cinzel first-letter:text-amber-600 first-letter:font-black first-letter:float-left first-letter:mr-3 first-letter:leading-none">
+          Bajo la lona gastada y los ecos dormidos del abandonado <strong>Circo Valentía</strong>, la condición humana se despoja de artificios para mostrar su fibra más vulnerable y valiente. Así se presenta <strong>«Misericordia Inesperada»</strong>, una ambiciosa puesta en escena escrita y dirigida por el dramaturgo guatemalteco <strong>Arc Guimel (Guillermo Arce)</strong>, producida por <strong>Rey Balam Productora³</strong>, con el acompañamiento en gestión cultural y co-dirección artística de <strong>Gustavo Ostrich</strong>, y en co-producción ejecutiva con <strong>MilenioTres Producciones®</strong>.
+        </p>
+
+        <p>
+          La propuesta, enmarcada en el cruce sensible del drama psicológico y el realismo mágico, articula siete escenas distribuidas en dos actos que confrontan al espectador con realidades apremiantes: la salud mental, el abandono del adulto mayor, la desolación y el duelo, pero también con la inquebrantable pulsión del perdón y la empatía comunitaria.
+        </p>
+
+        <h3 class="text-xl font-cinzel font-black text-neutral-950 pt-4">Una metáfora viva entre carpas y claroscuros</h3>
+        <p>
+          En el corazón del relato habita <strong>Eddy</strong> (encarnado por el actor Diego Alejandro Sierra Garrido), un joven cuidador y expayaso que custodia los despojos del circo vistiendo un traje negro y amarillo, evocador de las abejas obreras que insisten en reconstruir su colmena aun entre ruinas. Eddy comparte su intemperie con dos almas heridas por el olvido: <strong>Bruno</strong> (interpretado por José Julio Barrutia Cañas), un veterano malabarista lisiado tras un accidente que lo arrojó a la mendicidad y el reciclaje; y <strong>Margarita</strong> (María Isabel Yela Sayle), una mujer empujada al desamparo familiar tras el diagnóstico de demencia.
+        </p>
+
+        <blockquote class="my-6 p-5 rounded-2xl border-l-4 border-amber-500 bg-amber-50/80 text-neutral-900 italic font-playfair text-base shadow-sm">
+          «Bruno, Margarita y Eddy encarnan respectivamente la tragedia, la locura y el amor. El circo funciona como una metáfora de la existencia: aquello que aprendemos en el hogar lo proyectamos cotidianamente en la sociedad.»
+          <span class="block text-right text-xs text-amber-900 font-sans font-black not-italic mt-2">— Guillermo Arce (Arc Guimel), Autor y Director</span>
+        </blockquote>
+
+        <p>
+          Junto a la terna protagónica, la fantasía escénica cobra vida a través de presencias totémicas y líricas: el <strong>Señor Sísifo</strong>, un oso de peluche que se erige como confidente y guardián emocional; la imponente y sombría silueta del <strong>Espectro Ambrosía</strong> (el zanquero Erwin Ramón Molina Villatoro), cuya anatomía desmesurada acecha los límites entre la vida y la fatalidad; la voz luminosa de <strong>Valentina</strong> (Sofía Ponce), una catrina de tintes poéticos que canta a la esperanza, secundada por la gracia silenciosa del <strong>Mimo</strong> interpretado por Héctor Toledo; y las <strong>Ánimas circenses</strong>, encarnadas por los virtuosos malabaristas Fredy Leonardo Turcios («El Mascota») y Daniel Estuardo Morales Martínez.
+        </p>
+
+        <h3 class="text-xl font-cinzel font-black text-neutral-950 pt-4">Dispositivo multidisciplinario y redención</h3>
+        <p>
+          Lejos de ser un drama estático, *Misericordia Inesperada* destaca por su riqueza multisensorial. La dirección artística y escénica de <strong>Iván López</strong>, la dirección coreográfico-musical de <strong>Fredy Corado Arévalo</strong> y el diseño sonoro a cargo de <strong>Nosbit Audio Studio</strong> construyen una experiencia inmersiva enriquecida con música en vivo. Cada cambio de acto se ve realzado por el cuidado vestuario de <strong>Héctor Leal</strong>, que equilibra la estética circense clásica con acentos oníricos.
+        </p>
+
+        <p>
+          El nudo dramático culmina cuando la voluntad de proteger al prójimo interrumpe el ciclo de desesperanza: al defender a una familia en peligro, Eddy descubre que la redención no surge del aislamiento, sino de tender la mano al otro. *Misericordia Inesperada* no solo es una cita con el teatro de autor; es un recordatorio urgente de que, aun sobre la cuerda floja del destino, el triunfo del espíritu humano es inevitable cuando se ama la vida.
+        </p>
+
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <span class="text-xs text-neutral-600 font-medium">¿Deseas compartir este artículo o adquirir entradas?</span>
+        <a href="#boletos" class="px-6 py-2.5 rounded-xl bg-neutral-950 text-amber-400 hover:text-black hover:bg-amber-400 font-black text-xs uppercase tracking-wider transition-all shadow border border-black">
+          <i class="fa-solid fa-ticket mr-1.5"></i> Comprar Boletos para el Estreno
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL FLOTANTE DE CONFIRMACIÓN DE RESERVA (SIN ALERTAS NATIVAS) -->
+  <div id="bookingModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="glass-card rounded-3xl max-w-lg w-full p-6 sm:p-8 border-2 border-amber-400 shadow-2xl relative bg-white">
+      
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-neutral-800 text-xl">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center space-y-4">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center text-3xl border border-emerald-300">
+          <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h3 class="font-cinzel text-2xl font-black text-neutral-950">¡Reserva Iniciada con Éxito!</h3>
+        
+        <p class="text-sm text-neutral-700 font-medium" id="modalMessage">
+          Tus boletos para <strong>Misericordia Inesperada</strong> han sido procesados. Serás redirigido a la pasarela segura de SocialTickets para finalizar tu pago.
+        </p>
+
+        <div class="bg-neutral-50 p-4 rounded-xl text-left text-xs space-y-2 border border-neutral-200" id="modalDetails">
+          <!-- Detalles generados dinámicamente -->
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row gap-3">
+          <a id="modalExternalLink" href="https://eventos.socialtickets.org/event/misericordia-inesperada-otza16" target="_blank" class="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-500 text-neutral-950 font-black text-xs uppercase tracking-wider text-center transition-all shadow border border-black/10">
+            Ir a Pagar a SocialTickets.org
+          </a>
+          <button onclick="closeModal()" class="w-full py-3 rounded-xl bg-neutral-100 text-neutral-800 font-bold text-xs uppercase tracking-wider hover:bg-neutral-200 transition-all border border-neutral-300">
+            Seguir explorando
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER OFICIAL -->
+  <footer class="bg-[#121316] text-gray-400 border-t-4 border-amber-400 py-12 px-4 z-10 relative text-xs">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      
+      <div class="space-y-3">
+        <div class="flex items-center space-x-2">
+          <img src="LOGO-MisericordiaInesperada.jpg" alt="Logo" class="h-10 w-auto rounded border border-amber-400/40">
+          <span class="font-cinzel text-white font-bold text-sm">MISERICORDIA INESPERADA</span>
+        </div>
+        <p class="text-gray-400">
+          Una producción teatral independiente que une música en vivo, realismo mágico y reflexión humanista en Guatemala.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-amber-400 uppercase tracking-wider mb-3">Compañías Productoras</h4>
+        <ul class="space-y-1.5 text-gray-300">
+          <li>• Rey Balam Productora³</li>
+          <li>• MilenioTres Producciones®</li>
+          <li>• Gustavo Ostrich (Gestión Cultural)</li>
+          <li>• Nosbit Audio Studio</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-amber-400 uppercase tracking-wider mb-3">Funciones & Sala</h4>
+        <ul class="space-y-1.5 text-gray-300">
+          <li><strong>Domingo 15 Nov:</strong> 18:00 hrs</li>
+          <li><strong>Sábado 21 Nov:</strong> 20:00 hrs</li>
+          <li><strong>Sala:</strong> Teatro Mágico de Marcel</li>
+          <li>8ª Avenida 0-49, Zona 2, Ciudad de Guatemala</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-amber-400 uppercase tracking-wider mb-3">Venta Oficial</h4>
+        <p class="mb-2 text-gray-300">Plataforma oficial de boletaje digital:</p>
+        <a href="https://eventos.socialtickets.org/event/misericordia-inesperada-otza16" target="_blank" class="inline-block px-3.5 py-1.5 rounded-lg bg-amber-400 text-black font-black text-xs hover:bg-amber-300 transition-colors shadow">
+          <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> SocialTickets.org
+        </a>
+      </div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500">
+      <p>© 2026 Misericordia Inesperada. Todos los derechos reservados. Dramaturgia por Arc Guimel.</p>
+      <p class="mt-2 sm:mt-0">Diseño vintage circense con fondos crema, contrastes amarillos intensos y motor de ticketing.</p>
+    </div>
+  </footer>
+
+  <!-- LÓGICA DE INTERACCIÓN, CANVAS 3D Y MOTOR DE VENTA -->
+  <script>
+    /* ========================================================
+       1. ESTADO DE RESERVAS Y TICKETING
+       ======================================================== */
+    const state = {
+      selectedFunction: '15nov',
+      functionDetails: {
+        '15nov': 'Domingo 15 de Noviembre - 18:00 hrs',
+        '21nov': 'Sábado 21 de Noviembre - 20:00 hrs'
+      },
+      qty: 2,
+      singlePrice: 100,
+      comboPairPrice: 150
+    };
+
+    function selectFunction(fnKey) {
+      state.selectedFunction = fnKey;
+
+      const card15 = document.getElementById('card-15nov');
+      const card21 = document.getElementById('card-21nov');
+
+      if (fnKey === '15nov') {
+        card15.classList.add('border-amber-500', 'bg-amber-50');
+        card15.classList.remove('border-neutral-300', 'bg-neutral-50/70');
+        card15.querySelector('.check-icon').className = 'fa-solid fa-circle-check text-amber-600 check-icon';
+
+        card21.classList.remove('border-amber-500', 'bg-amber-50');
+        card21.classList.add('border-neutral-300', 'bg-neutral-50/70');
+        card21.querySelector('.check-icon').className = 'fa-regular fa-circle text-neutral-400 check-icon';
+      } else {
+        card21.classList.add('border-amber-500', 'bg-amber-50');
+        card21.classList.remove('border-neutral-300', 'bg-neutral-50/70');
+        card21.querySelector('.check-icon').className = 'fa-solid fa-circle-check text-amber-600 check-icon';
+
+        card15.classList.remove('border-amber-500', 'bg-amber-50');
+        card15.classList.add('border-neutral-300', 'bg-neutral-50/70');
+        card15.querySelector('.check-icon').className = 'fa-regular fa-circle text-neutral-400 check-icon';
+      }
+
+      calculateTotal();
+    }
+
+    function updateQty(change) {
+      const newQty = state.qty + change;
+      if (newQty >= 1 && newQty <= 20) {
+        state.qty = newQty;
+        document.getElementById('ticketQty').innerText = state.qty;
+        calculateTotal();
+      }
+    }
+
+    function calculateTotal() {
+      // Regla de precio oficial: Q. 100 por boleto individual, 2 boletos por Q. 150
+      const pairs = Math.floor(state.qty / 2);
+      const remainder = state.qty % 2;
+      const total = (pairs * state.comboPairPrice) + (remainder * state.singlePrice);
+      const regularPrice = state.qty * state.singlePrice;
+      const discount = regularPrice - total;
+
+      document.getElementById('summaryFunction').innerText = state.functionDetails[state.selectedFunction];
+      document.getElementById('summaryQty').innerText = `${state.qty} Entrada${state.qty > 1 ? 's' : ''}`;
+      
+      const discountEl = document.getElementById('summaryDiscount');
+      if (discount > 0) {
+        discountEl.innerText = `- Q. ${discount.toFixed(2)} (Promoción 2x150)`;
+        discountEl.classList.remove('text-gray-400');
+        discountEl.classList.add('text-emerald-400');
+      } else {
+        discountEl.innerText = 'Q. 0.00';
+        discountEl.classList.remove('text-emerald-400');
+        discountEl.classList.add('text-gray-400');
+      }
+
+      document.getElementById('summaryTotal').innerText = `Q. ${total.toFixed(2)}`;
+    }
+
+    function handlePurchase() {
+      const name = document.getElementById('buyerName').value.trim();
+      const email = document.getElementById('buyerEmail').value.trim();
+      const phone = document.getElementById('buyerPhone').value.trim();
+
+      const pairs = Math.floor(state.qty / 2);
+      const remainder = state.qty % 2;
+      const total = (pairs * state.comboPairPrice) + (remainder * state.singlePrice);
+
+      const modalDetails = document.getElementById('modalDetails');
+      modalDetails.innerHTML = `
+        <div class="flex justify-between border-b border-neutral-200 pb-1.5">
+          <span class="text-neutral-500 font-semibold">Comprador:</span>
+          <span class="text-neutral-950 font-black">${name || 'Invitado Especial'}</span>
+        </div>
+        <div class="flex justify-between border-b border-neutral-200 pb-1.5">
+          <span class="text-neutral-500 font-semibold">Función:</span>
+          <span class="text-amber-800 font-black">${state.functionDetails[state.selectedFunction]}</span>
+        </div>
+        <div class="flex justify-between border-b border-neutral-200 pb-1.5">
+          <span class="text-neutral-500 font-semibold">Cantidad:</span>
+          <span class="text-neutral-950 font-black">${state.qty} boleto(s)</span>
+        </div>
+        <div class="flex justify-between pt-1">
+          <span class="text-neutral-500 font-semibold">Monto Calculado:</span>
+          <span class="text-amber-700 font-black text-base">Q. ${total.toFixed(2)}</span>
+        </div>
+      `;
+
+      document.getElementById('bookingModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+    }
+
+    /* ========================================================
+       2. EFECTO 3D TILT AL MOVIMIENTO DEL MOUSE (POSTER CARD)
+       ======================================================== */
+    const posterCard = document.getElementById('posterCard');
+    const glareLayer = document.getElementById('glareLayer');
+    const spotLeft = document.getElementById('spotlightLeft');
+    const spotRight = document.getElementById('spotlightRight');
+
+    if (posterCard) {
+      posterCard.addEventListener('mousemove', (e) => {
+        const rect = posterCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Rotación 3D proporcional
+        const rotateX = ((y - centerY) / centerY) * -14;
+        const rotateY = ((x - centerX) / centerX) * 14;
+
+        posterCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+        
+        if (glareLayer) {
+          const glareX = (x / rect.width) * 100;
+          const glareY = (y / rect.height) * 100;
+          glareLayer.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.3) 0%, transparent 60%)`;
+        }
+      });
+
+      posterCard.addEventListener('mouseleave', () => {
+        posterCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        if (glareLayer) {
+          glareLayer.style.background = 'transparent';
+        }
+      });
+    }
+
+    // Luces volumétricas que responden al cursor en toda la pantalla
+    window.addEventListener('mousemove', (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const winW = window.innerWidth;
+      const winH = window.innerHeight;
+
+      const moveX = (mouseX / winW - 0.5) * 50;
+      const moveY = (mouseY / winH - 0.5) * 50;
+
+      if (spotLeft) spotLeft.style.transform = `translate(${moveX * 0.8}px, ${moveY * 0.8}px)`;
+      if (spotRight) spotRight.style.transform = `translate(${-moveX * 0.6}px, ${-moveY * 0.6}px)`;
+    });
+
+    /* ========================================================
+       3. AMBIENTE ESCÉNICO: MÁSCARAS DE TEATRO Y NOTAS MUSICALES FLOTANTES
+       ======================================================== */
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let theaterElements = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Símbolos escénicos: Máscaras de tragedia/comedia y notas musicales
+    const theatricalSymbols = ['🎭', '♩', '♪', '♫', '♬', '🎪', '🎭'];
+
+    class FloatingSymbol {
+      constructor() {
+        this.reset();
+        this.y = Math.random() * canvas.height; // Inicializar dispersas en la pantalla
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 40;
+        this.symbol = theatricalSymbols[Math.floor(Math.random() * theatricalSymbols.length)];
+        
+        // Tamaños variados y discretos para no competir con el contenido
+        this.fontSize = this.symbol === '🎭' || this.symbol === '🎪' 
+          ? Math.floor(Math.random() * 16 + 14) 
+          : Math.floor(Math.random() * 18 + 12);
+
+        this.speedY = -(Math.random() * 0.6 + 0.25); // Flotación ascendente suave
+        this.speedX = (Math.random() - 0.5) * 0.4; // Oscilación horizontal ligera
+        this.rotation = (Math.random() - 0.5) * 0.6;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.01;
+        
+        // Opacidad muy tenue y controlada para no interferir en la lectura (entre 0.12 y 0.25)
+        this.opacity = Math.random() * 0.13 + 0.12;
+
+        // Tonalidades: ámbar vintage, sepia oscuro y carbón suave
+        const colors = [
+          `rgba(217, 119, 6, ${this.opacity})`,
+          `rgba(180, 83, 9, ${this.opacity})`,
+          `rgba(90, 70, 40, ${this.opacity})`,
+          `rgba(40, 40, 45, ${this.opacity})`
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+
+        // Reiniciar cuando salen por arriba o los costados
+        if (this.y < -50 || this.x < -30 || this.x > canvas.width + 30) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = this.color;
+        ctx.font = `${this.fontSize}px 'Outfit', serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.symbol, 0, 0);
+        ctx.restore();
+      }
+    }
+
+    // Inicializar elementos flotantes
+    const elementCount = window.innerWidth < 768 ? 22 : 40;
+    for (let i = 0; i < elementCount; i++) {
+      theaterElements.push(new FloatingSymbol());
+    }
+
+    function animateAmbient() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < theaterElements.length; i++) {
+        theaterElements[i].update();
+        theaterElements[i].draw();
+      }
+      requestAnimationFrame(animateAmbient);
+    }
+
+    window.onload = function() {
+      calculateTotal();
+      animateAmbient();
+    };
+  </script>
+</body>
+</html>
